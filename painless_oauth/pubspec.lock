@@ -67,6 +67,11 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_web_plugins:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   image:
     dependency: transitive
     description:
@@ -92,6 +97,13 @@ packages:
     dependency: "direct main"
     description:
       path: "../painless_oauth_interface"
+      relative: true
+    source: path
+    version: "0.0.1"
+  painless_oauth_web:
+    dependency: "direct main"
+    description:
+      path: "../painless_oauth_web"
       relative: true
     source: path
     version: "0.0.1"

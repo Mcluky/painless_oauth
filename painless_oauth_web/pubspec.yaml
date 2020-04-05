@@ -1,0 +1,29 @@
+name: painless_oauth_web
+description: A painless_oauth implemention for the web
+version: 0.0.1
+author:
+homepage:
+
+flutter:
+  plugin:
+    implements: painless_oauth
+    platforms:
+      web:
+        pluginClass: PainlessOAuthPlugin
+        filename: painless_oauth_web.dart
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  painless_oauth_interface:
+    path: ../painless_oauth_interface
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
