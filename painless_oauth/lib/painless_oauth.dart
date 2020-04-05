@@ -1,7 +1,8 @@
 library painless_oauth;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
+
+class PainlessOAuth {
+ Future authorize() async {
+
+ }
 }
