@@ -1,6 +1,6 @@
 library painless_oauth_interface;
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:painless_oauth_interface/authorization_client.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -13,14 +13,14 @@ abstract class PainlessOAuthPlatform extends PlatformInterface {
   static final Object _token = Object();
   static PainlessOAuthPlatform _instance;
 
-  static set instance(PainlessOAuthPlatform instance){
+  static set instance(PainlessOAuthPlatform instance) {
     PlatformInterface.verifyToken(instance, _token);
     _instance = _instance;
   }
 
   static PainlessOAuthPlatform get instance => _instance;
 
-  /// Ensures that an authorization widget is shown. It is not guaranteed that this
+  /// Ensures that an authorization page is shown. It is not guaranteed that this
   /// widget is actually the authorization page widget itself. E.g the actual authorization can happen
   /// in a popup window, in this case this widget should display a loading bar or something similar
   /// meanwhile the actual action happens on the popup.
@@ -31,13 +31,14 @@ abstract class PainlessOAuthPlatform extends PlatformInterface {
   /// E.g:
   /// [platformSpecificOptions].putIfAbsent('ios.safariUseJavaScript', () => true);
   /// [platformSpecificOptions].putIfAbsent('web.useComponent', () => 'iframe');
-  Widget authorizationPage(AuthorizationClient authorizationClient, Map<String, dynamic> platformSpecificOptions){
+  Widget authorizationPage({@required AuthorizationClient authorizationClient,
+    Map<String, dynamic> platformSpecificOptions = const {}}) {
     throw UnimplementedError('authorizationPage() has not been implemented.');
   }
 
   /// This method returns a map containing the response from the authorization service. Throws an Error when the
   /// authorization failed.
-  Future<Map<String, dynamic>> listenForResult(){
+  Future<Map<String, dynamic>> listenForResult() async {
     throw UnimplementedError('listenForResult() has not been implemented.');
   }
 }

@@ -14,4 +14,6 @@ abstract class AuthorizationClient {
   String get state;
   /// @Nullable. Optional, additional request parameters
   Map<String, String> get additionalRequestParameters;
+
+  AuthorizationClient._();
 }
