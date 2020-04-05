@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:painless_oauth/clients/spotify_oauth_client.dart';
 import 'package:painless_oauth/oauth/implicit/implicit_authenticator.dart';
+import 'package:painlessoauthexample/oauth_properties.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,10 +25,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  SpotifyImplicitFlowOAuthClient _spotifyImplicitFlowOAuthClient;
   ImplicitAuthenticator _implicitAuthenticator;
 
   @override
   void initState() {
+    _spotifyImplicitFlowOAuthClient = SpotifyImplicitFlowOAuthClient(
+      redirectUri: OAuthProperties.redirectUri,
+      clientId: OAuthProperties.clientId
+    );
     _implicitAuthenticator = ImplicitAuthenticator();
     super.initState();
   }
@@ -42,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: RaisedButton(
             child: Text('Login'),
             color: Colors.green,
-            onPressed: () => _implicitAuthenticator.login(context),
+            onPressed: () => _implicitAuthenticator.login(context, _spotifyImplicitFlowOAuthClient),
           ),
         ),
       )
