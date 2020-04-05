@@ -4,7 +4,7 @@ abstract class AuthorizationClient {
   /// Url of authorization page
   /// E.g: (Spotify) https://accounts.spotify.com/authorize
   /// (Azure)
-  Uri get authorizationUrl;
+  Uri get authorizationUri;
   String get responseType;
   String get clientId;
   Uri get redirectUri;
