@@ -1,5 +1,5 @@
 abstract class GrantType {
-  static const authorizationCode = 'authorization_code';
+  static const String authorizationCode = 'authorization_code';
 
   GrantType._();
 }

@@ -5,8 +5,8 @@ import 'package:painless_oauth_interface/authorization_client.dart';
 
 /// Use this OAuth client for implicit flow services that don't have yet an official
 /// support for this library. It offers only a minimal abstraction over other official clients.
-class BasicImplicitOAuthClient implements AuthorizationClient {
-  final Uri authorizationUrl;
+class BasicImplicitFlowOAuthClient implements AuthorizationClient {
+  final Uri authorizationUri;
   final String responseType;
   final String clientId;
   final Uri redirectUri;
@@ -14,8 +14,8 @@ class BasicImplicitOAuthClient implements AuthorizationClient {
   final String state;
   final Map<String, String> additionalRequestParameters;
 
-  BasicImplicitOAuthClient(
-      {@required this.authorizationUrl,
+  BasicImplicitFlowOAuthClient(
+      {@required this.authorizationUri,
       @required this.clientId,
       @required this.redirectUri,
       this.responseType = ResponseType.implicitFlow,
@@ -26,11 +26,28 @@ class BasicImplicitOAuthClient implements AuthorizationClient {
 
 /// Use this OAuth client for code flow services that don't have yet an official
 /// support for this library. It offers only a minimal abstraction over other official clients.
-class BasicCodeOAuthClient extends BasicImplicitOAuthClient {
-  final Uri tokenUrl;
+class BasicCodeFlowOAuthClient extends BasicImplicitFlowOAuthClient {
+  final Uri tokenUri;
   final String clientSecret;
-  final String grantType;
+  BasicCodeFlowOAuthClient(
+      {@required Uri authorizationUri,
+      @required this.tokenUri,
+      @required Uri redirectUri,
+      @required String clientId,
+      @required this.clientSecret,
+      String responseType = ResponseType.codeFlow,
+      this.grantType = GrantType.authorizationCode,
+      List<String> scopes,
+      String state,
+      Map<String, String> additionalRequestParameters})
+      : super(
+            authorizationUri: authorizationUri,
+            clientId: clientId,
+            redirectUri: redirectUri,
+            responseType: responseType,
+            scopes: scopes,
+            state: state,
+            additionalRequestParameters: additionalRequestParameters);
 
-  BasicCodeOAuthClient(
-      {@required this.tokenUrl, @required this.clientSecret, this.grantType = GrantType.authorizationCode});
+  final String grantType;
 }
