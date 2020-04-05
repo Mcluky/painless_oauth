@@ -32,7 +32,7 @@ abstract class PainlessOAuthPlatform extends PlatformInterface {
   /// [platformSpecificOptions].putIfAbsent('ios.safariUseJavaScript', () => true);
   /// [platformSpecificOptions].putIfAbsent('web.useComponent', () => 'iframe');
   Widget authorizationPage({@required AuthorizationClient authorizationClient,
-    Map<String, dynamic> platformSpecificOptions = const {}}) {
+    Map<String, Object> platformSpecificOptions = const {}}) {
     throw UnimplementedError('authorizationPage() has not been implemented.');
   }
 

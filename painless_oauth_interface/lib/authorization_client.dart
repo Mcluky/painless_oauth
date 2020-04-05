@@ -1,5 +1,3 @@
-library painless_oauth_interface;
-
 abstract class AuthorizationClient {
   /// Url of authorization page
   /// E.g: (Spotify) https://accounts.spotify.com/authorize
