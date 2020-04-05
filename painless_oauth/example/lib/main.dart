@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:painless_oauth/oauth/implicit/implicit_authenticator.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,6 +23,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  ImplicitAuthenticator _implicitAuthenticator;
+
+  @override
+  void initState() {
+    _implicitAuthenticator = ImplicitAuthenticator();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +37,13 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: FlatButton(
-          child: Text('Authorize'),
+      body: Material(
+        child: Center(
+          child: RaisedButton(
+            child: Text('Login'),
+            color: Colors.green,
+            onPressed: () => _implicitAuthenticator.login(context),
+          ),
         ),
       )
     );
