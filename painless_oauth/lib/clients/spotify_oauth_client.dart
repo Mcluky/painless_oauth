@@ -19,7 +19,7 @@ class SpotifyImplicitFlowOAuthClient extends BasicImplicitFlowOAuthClient {
             responseType: ResponseType.implicitFlow,
             scopes: scopes,
             state: state,
-            additionalRequestParameters: const {}) {
+            additionalRequestParameters: Map()) {
     this.additionalRequestParameters.putIfAbsent('show_dialog', () => showDialog.toString());
   }
 }
@@ -44,7 +44,7 @@ class SpotifyCodeFlowOAuthClient extends BasicCodeFlowOAuthClient {
       grantType: GrantType.authorizationCode,
       scopes: scopes,
       state: state,
-      additionalRequestParameters: const {}) {
+      additionalRequestParameters: Map()) {
     this.additionalRequestParameters.putIfAbsent('show_dialog', () => showDialog.toString());
   }
 }
