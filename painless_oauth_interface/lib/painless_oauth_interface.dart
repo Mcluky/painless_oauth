@@ -13,10 +13,12 @@ abstract class PainlessOAuthPlatform extends PlatformInterface {
 
   static set instance(PainlessOAuthPlatform instance) {
     PlatformInterface.verifyToken(instance, _token);
-    _instance = _instance;
+    _instance = instance;
   }
 
   static PainlessOAuthPlatform get instance => _instance;
+
+  PainlessOAuthPlatform(): super(token: _token);
 
   /// Ensures that an authorization page is shown. It is not guaranteed that this
   /// widget is actually the authorization page widget itself. E.g the actual authorization can happen
