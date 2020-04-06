@@ -10,7 +10,7 @@ flutter:
     platforms:
       web:
         pluginClass: PainlessOAuthPlugin
-        filename: painless_oauth_web.dart
+        fileName: painless_oauth_web.dart
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
