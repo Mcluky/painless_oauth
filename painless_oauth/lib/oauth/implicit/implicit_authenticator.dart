@@ -4,6 +4,7 @@ import 'package:painless_oauth_interface/painless_oauth_interface.dart';
 
 class ImplicitAuthenticator {
   void login(BuildContext context, AuthorizationClient authorizationClient, [Map<String, Object> platformSpecificOptions]) {
+    print(PainlessOAuthPlatform.instance);
     PainlessOAuthPlatform.instance.listenForResult().then((value) {
       print('----- OAUTH DONE -----');
       print(value);
@@ -12,9 +13,11 @@ class ImplicitAuthenticator {
       context: context,
       child: Center(
           child: Stack(
+            alignment: Alignment.center,
             children: <Widget>[
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   CircularProgressIndicator(),
                   Container(
