@@ -5,6 +5,8 @@ author:
 homepage:
 
 flutter:
+  assets:
+    - capturer/oauth_callback_capturer_service_worker.js
   plugin:
     implements: painless_oauth
     platforms:
@@ -22,6 +24,8 @@ dependencies:
     sdk: flutter
   painless_oauth_interface:
     path: ../painless_oauth_interface
+  # todo distribute a copy of the license of the service worker api (caused by BSD 3-Clause "New" or "Revised" License)
+  service_worker: ^0.2.4
 
 dev_dependencies:
   flutter_test:

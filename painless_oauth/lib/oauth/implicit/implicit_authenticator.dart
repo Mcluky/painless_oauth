@@ -4,8 +4,8 @@ import 'package:painless_oauth_interface/painless_oauth_interface.dart';
 
 class ImplicitAuthenticator {
   void login(BuildContext context, AuthorizationClient authorizationClient, [Map<String, Object> platformSpecificOptions]) {
-    print(PainlessOAuthPlatform.instance);
-    PainlessOAuthPlatform.instance.listenForResult().then((value) {
+    var redirectUri = authorizationClient.redirectUri;
+    PainlessOAuthPlatform.instance.listenForResult(redirectUri).then((value) {
       print('----- OAUTH DONE -----');
       print(value);
     });
