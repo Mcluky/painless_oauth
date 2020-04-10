@@ -38,7 +38,7 @@ abstract class PainlessOAuthPlatform extends PlatformInterface {
 
   /// This method returns a map containing the response from the authorization service. Throws an Error when the
   /// authorization failed.
-  Future<Map<String, Object>> listenForResult() async {
+  Future<Map<String, Object>> listenForResult(Uri redirectUrl) async {
     throw UnimplementedError('listenForResult() has not been implemented.');
   }
 }
