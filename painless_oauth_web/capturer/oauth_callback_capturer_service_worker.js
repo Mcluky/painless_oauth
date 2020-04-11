@@ -1,29 +1,49 @@
+//@ts-check
+
 //todo only allow specified url
 self.addEventListener('fetch', function (event) {
-  event.respondWith(Promise.resolve().then(function() {
-    handleCallback(event.request);
-    console.log('--- SERVICE WORKER START ---');
-    console.log(event.request);
-    console.log('--- SERVICE WORKER END ---');
-    return new Response('<p>Hallo from freundlichen Service-Worker!</p>', {
-      headers: { 'Content-Type': 'text/html' }
+  event.respondWith(
+    handleCallback(event.request)
+    .then((parameters) => {
+      return new Response('<p>Logging in...</p>', {
+        headers: { 'Content-Type': 'text/html' }
+      })
+    }).catch((error) => {
+      console.error('Failed to log in.')
+      console.error(error);  
     })
-  }));
+  );
 });
 
-var handleCallback = function(request) {
-  if(!request || !request.url) {
-    return; //todo figur out what to do here
-  }
-  var parameterTransferObject = {};
-  var requestUrl = new URL(request.url);
+function handleCallback(request) {
+  return new Promise((resolve, reject) => {
+    if(!request || !request.url) {
+      var error = {
+        error: 'invalid_request',
+        error_description: 'The received callback request was invalid' + request
+      }
+      notifyCallbackListener(error);
+      reject(error);
+    }
+    var requestUrl = new URL(request.url);
+    var parameters = parseQueryParameters(requestUrl);
+    notifyCallbackListener(parameters);
+    resolve(parameters);
+  })
+}
+
+function parseQueryParameters(requestUrl){
+  var parameterMap = {};
   var queryParameters = requestUrl.searchParams;
-  for(parameterPair of queryParameters.entries()){
+  for(var parameterPair of queryParameters.entries()){
     var key = parameterPair[0];
     var value = parameterPair[1];
-    parameterTransferObject[key] = value;    
+    parameterMap[key] = value;    
   }
-  console.log(parameterTransferObject);
-    //var test = Array.from((new URL(event.request.url).searchParams).entries())
+  return parameterMap;
 }
-//var test = Array.from((new URL(event.request.url).searchParams).entries())
+
+function notifyCallbackListener(parameters){
+  var oauthCallbackChannel = new BroadcastChannel('oauth_callback')
+  oauthCallbackChannel.postMessage(parameters);
+}
