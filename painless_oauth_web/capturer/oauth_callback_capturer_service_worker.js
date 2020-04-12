@@ -25,10 +25,13 @@ function handleCallback(request) {
       notifyCallbackListener(error);
       reject(error);
     }
-    var requestUrl = new URL(request.url);
-    var parameters = parseQueryParameters(requestUrl);
-    notifyCallbackListener(parameters);
-    resolve(parameters);
+    notifyCallbackListener(request.url)
+    resolve(request.url);
+    //todo remove unnecessary stuff
+    //var requestUrl = new URL(request.url);
+    //var parameters = parseQueryParameters(requestUrl);
+    //notifyCallbackListener(parameters);
+    //resolve(parameters);
   })
 }
 

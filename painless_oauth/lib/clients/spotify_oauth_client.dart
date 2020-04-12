@@ -29,22 +29,22 @@ class SpotifyImplicitFlowOAuthClient extends BasicImplicitFlowOAuthClient {
 class SpotifyCodeFlowOAuthClient extends BasicCodeFlowOAuthClient {
   SpotifyCodeFlowOAuthClient(
       {@required Uri redirectUri,
-        @required String clientId,
-        @required String clientSecret,
-        List<String> scopes,
-        String state,
-        bool showDialog = false})
+      @required String clientId,
+      @required String clientSecret,
+      List<String> scopes,
+      String state,
+      bool showDialog = false})
       : super(
-      authorizationUri: _spotifyAuthorizationUri,
-      tokenUri: _spotifyTokenUri,
-      clientId: clientId,
-      clientSecret: clientSecret,
-      redirectUri: redirectUri,
-      responseType: ResponseType.codeFlow,
-      grantType: GrantType.authorizationCode,
-      scopes: scopes,
-      state: state,
-      additionalRequestParameters: Map()) {
+            authorizationUri: _spotifyAuthorizationUri,
+            tokenUri: _spotifyTokenUri,
+            clientId: clientId,
+            clientSecret: clientSecret,
+            redirectUri: redirectUri,
+            responseType: ResponseType.codeFlow,
+            grantType: GrantType.authorizationCode,
+            scopes: scopes,
+            state: state,
+            additionalRequestParameters: Map()) {
     this.additionalRequestParameters.putIfAbsent('show_dialog', () => showDialog.toString());
   }
 }

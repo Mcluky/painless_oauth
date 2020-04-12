@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:html';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:painless_oauth_interface/authorization_client.dart';
@@ -14,12 +15,19 @@ class PainlessOAuthPlugin extends PainlessOAuthPlatform {
   @override
   Widget authorizationPage(
       {@required AuthorizationClient authorizationClient, Map<String, Object> platformSpecificOptions = const {}}) {
-    print('in authorizationPage');
-    return AuthorizationPage();
+    //todo add this key to documention
+    bool useIframe = platformSpecificOptions['useIfame'] ?? false;
+    Uri parametrizedAuthorizationUri = authorizationClient.parametrizedAuthorizationUri;
+    if(useIframe){
+      return AuthorizationPage(authorizationUri: parametrizedAuthorizationUri);
+    }
+    //String windowsFeature = 'menubar=no,toolbar=no';
+    window.open(parametrizedAuthorizationUri.toString(), 'Painless_OAuth_Popup');
+    return Text('Waiting...');
   }
 
   @override
-  Future<Map<String, Object>> listenForResult(AuthorizationClient authorizationClient) async {
+  Future<Map<String, String>> listenForResult(AuthorizationClient authorizationClient) async {
     CallbackCapturerService callbackCapturerService = CallbackCapturerService();
     await callbackCapturerService.initialise();
     return callbackCapturerService.listenForResult();

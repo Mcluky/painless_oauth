@@ -20,14 +20,17 @@ class CallbackCapturerService{
   }
 
   /// Listen for the callback
-  Future<Map<String, Object>> listenForResult(){
-    Completer completer = Completer();
+  Future<Map<String, String>> listenForResult(){
+    Completer<Map<String, String>> completer = Completer();
     //listen for response from service worker
     BroadcastChannel oauthCallbackChannel = new BroadcastChannel('oauth_callback');
-    oauthCallbackChannel.onMessage.listen((event) {
-      print('Received broadcast event');
+    oauthCallbackChannel.onMessage.first.then((event) {
       print(event.data);
-      completer.complete(event.data);
+      Uri callbackUri = Uri.parse(event.data);
+      print(callbackUri);
+      Map<String, String> parameters = callbackUri.queryParameters;
+      print(parameters);
+      completer.complete(parameters);
     });
     return completer.future;
   }

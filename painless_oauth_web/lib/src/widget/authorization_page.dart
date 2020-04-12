@@ -6,6 +6,10 @@ import 'package:flutter/material.dart';
 import 'iframe_size_wrapper.dart';
 
 class AuthorizationPage extends StatefulWidget {
+  final Uri authorizationUri;
+
+  AuthorizationPage({@required this.authorizationUri});
+
   @override
   _AuthorizationPageState createState() => _AuthorizationPageState();
 }
@@ -16,7 +20,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
   @override
   void initState() {
     _iframeElement = IFrameElement();
-    _iframeElement.src = 'https://www.youtube.com/embed/QH2-TGUlwu4';
+    _iframeElement.src = widget.authorizationUri.toString();
     _iframeElement.style.border = 'none';
 
     // ignore: undefined_prefixed_name

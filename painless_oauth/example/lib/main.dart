@@ -31,10 +31,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    _spotifyImplicitFlowOAuthClient = SpotifyImplicitFlowOAuthClient(
-      redirectUri: OAuthProperties.redirectUri,
-      clientId: OAuthProperties.clientId
-    );
+    _spotifyImplicitFlowOAuthClient =
+        SpotifyImplicitFlowOAuthClient(redirectUri: OAuthProperties.redirectUri, clientId: OAuthProperties.clientId);
     _implicitAuthenticator = ImplicitAuthenticator();
     super.initState();
   }
@@ -42,18 +40,26 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Material(
-        child: Center(
-          child: RaisedButton(
-            child: Text('Login'),
-            color: Colors.green,
-            onPressed: () => _implicitAuthenticator.login(context, _spotifyImplicitFlowOAuthClient),
-          ),
+        appBar: AppBar(
+          title: Text(widget.title),
         ),
-      )
-    );
+        body: Material(
+          child: Center(
+            child: RaisedButton(
+              child: Text('Login'),
+              color: Colors.green,
+              onPressed: () {
+                _implicitAuthenticator.login(context, _spotifyImplicitFlowOAuthClient).then((response) {
+                  print('------------- SUCCESS -------------');
+                  print('access token: ${response.accessToken}');
+                }).catchError((error) {
+                  print('------------- SUCCESSN\'T -------------');
+                  print('error: ${error.error}');
+                  print('error description: ${error.errorDescription}');
+                });
+              },
+            ),
+          ),
+        ));
   }
 }

@@ -19,9 +19,12 @@ class BasicImplicitFlowOAuthClient implements AuthorizationClient {
       @required this.clientId,
       @required this.redirectUri,
       this.responseType = ResponseType.implicitFlow,
-      this.scopes = const [],
-      this.state = '', //todo state make random string
-      this.additionalRequestParameters = const {}});
+      List<String> scopes,
+      String state,
+      Map<String, String> additionalRequestParameters})
+      : this.scopes = scopes ?? [],
+        this.state = state ?? '', //todo state make random string
+        this.additionalRequestParameters = additionalRequestParameters ?? {};
 
   @override
   Uri get parametrizedAuthorizationUri {
@@ -30,19 +33,20 @@ class BasicImplicitFlowOAuthClient implements AuthorizationClient {
     return parametrizedAuthorizationUri;
   }
 
-  Map<String, String> _getAuthorizationQueryParameters(){
+  Map<String, String> _getAuthorizationQueryParameters() {
     Map<String, String> queryParameters = {
       'client_id': clientId,
       'response_type': responseType,
       'redirect_uri': redirectUri.toString(),
     };
-    if(scopes.isNotEmpty){
+    if (scopes.isNotEmpty) {
       queryParameters.putIfAbsent('scope', () => scopes.join(' '));
     }
-    if(state.isNotEmpty){
+    if (state.isNotEmpty) {
       queryParameters.putIfAbsent('state', () => state);
     }
     queryParameters.addAll(additionalRequestParameters);
+    return queryParameters;
   }
 }
 
