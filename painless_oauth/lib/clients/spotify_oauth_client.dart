@@ -4,8 +4,10 @@ import 'package:painless_oauth/constants/reponse_types.dart';
 
 import 'basic_oauth_client.dart';
 
+final Uri _spotifyAuthorizationUri = Uri.parse('https://accounts.spotify.com/authorize');
+final Uri _spotifyTokenUri = Uri.parse('https://accounts.spotify.com/api/token');
+
 class SpotifyImplicitFlowOAuthClient extends BasicImplicitFlowOAuthClient {
-  static final Uri _spotifyAuthorizationUri = Uri.parse('https://accounts.spotify.com/authorize');
   SpotifyImplicitFlowOAuthClient(
       {@required Uri redirectUri,
       @required String clientId,
@@ -25,8 +27,6 @@ class SpotifyImplicitFlowOAuthClient extends BasicImplicitFlowOAuthClient {
 }
 
 class SpotifyCodeFlowOAuthClient extends BasicCodeFlowOAuthClient {
-  static final Uri _spotifyAuthorizationUri = Uri.parse('https://accounts.spotify.com/authorize');
-  static final Uri _spotifyTokenUri = Uri.parse('https://accounts.spotify.com/api/token');
   SpotifyCodeFlowOAuthClient(
       {@required Uri redirectUri,
         @required String clientId,

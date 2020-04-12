@@ -19,9 +19,31 @@ class BasicImplicitFlowOAuthClient implements AuthorizationClient {
       @required this.clientId,
       @required this.redirectUri,
       this.responseType = ResponseType.implicitFlow,
-      this.scopes,
-      this.state,
-      this.additionalRequestParameters});
+      this.scopes = const [],
+      this.state = '', //todo state make random string
+      this.additionalRequestParameters = const {}});
+
+  @override
+  Uri get parametrizedAuthorizationUri {
+    Map<String, String> queryParameters = _getAuthorizationQueryParameters();
+    Uri parametrizedAuthorizationUri = authorizationUri.replace(queryParameters: queryParameters);
+    return parametrizedAuthorizationUri;
+  }
+
+  Map<String, String> _getAuthorizationQueryParameters(){
+    Map<String, String> queryParameters = {
+      'client_id': clientId,
+      'response_type': responseType,
+      'redirect_uri': redirectUri.toString(),
+    };
+    if(scopes.isNotEmpty){
+      queryParameters.putIfAbsent('scope', () => scopes.join(' '));
+    }
+    if(state.isNotEmpty){
+      queryParameters.putIfAbsent('state', () => state);
+    }
+    queryParameters.addAll(additionalRequestParameters);
+  }
 }
 
 /// Use this OAuth client for code flow services that don't have yet an official
@@ -29,6 +51,8 @@ class BasicImplicitFlowOAuthClient implements AuthorizationClient {
 class BasicCodeFlowOAuthClient extends BasicImplicitFlowOAuthClient {
   final Uri tokenUri;
   final String clientSecret;
+  final String grantType;
+
   BasicCodeFlowOAuthClient(
       {@required Uri authorizationUri,
       @required this.tokenUri,
@@ -48,6 +72,4 @@ class BasicCodeFlowOAuthClient extends BasicImplicitFlowOAuthClient {
             scopes: scopes,
             state: state,
             additionalRequestParameters: additionalRequestParameters);
-
-  final String grantType;
 }

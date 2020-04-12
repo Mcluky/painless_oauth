@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:painless_oauth/clients/spotify_oauth_client.dart';
-import 'package:painless_oauth/oauth/implicit/implicit_authenticator.dart';
-import 'package:painlessoauthexample/oauth_properties.dart';
+import 'package:painless_oauth/oauth/implicit_authenticator.dart';
+
+import 'oauth_properties.dart';
 
 void main() => runApp(MyApp());
 

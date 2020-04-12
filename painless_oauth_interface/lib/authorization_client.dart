@@ -13,5 +13,8 @@ abstract class AuthorizationClient {
   /// @Nullable. Optional, additional request parameters
   Map<String, String> get additionalRequestParameters;
 
+  /// Get the parametrized authorization uri. (Base url + parameter queries)
+  Uri get parametrizedAuthorizationUri;
+
   AuthorizationClient._();
 }

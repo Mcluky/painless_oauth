@@ -19,7 +19,7 @@ class PainlessOAuthPlugin extends PainlessOAuthPlatform {
   }
 
   @override
-  Future<Map<String, Object>> listenForResult(Uri redirectUro) async {
+  Future<Map<String, Object>> listenForResult(AuthorizationClient authorizationClient) async {
     CallbackCapturerService callbackCapturerService = CallbackCapturerService();
     await callbackCapturerService.initialise();
     return callbackCapturerService.listenForResult();
