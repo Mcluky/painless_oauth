@@ -5,5 +5,8 @@ abstract class PainlessOAuthError {
   ///@Nullable. Human-readable text providing additional information for the error that occurred.
   String get errorDescription;
 
+  ///@Nullable. A URI identifying a human-readable web page with information about the error.
+  Uri get errorUri;
+
   PainlessOAuthError._();
 }
