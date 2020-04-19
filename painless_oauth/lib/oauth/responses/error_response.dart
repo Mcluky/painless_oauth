@@ -1,5 +1,7 @@
-/// A representation of the error reponse defined in https://tools.ietf.org/html/rfc6749#section-5.2
-class ErrorResponse {
+import 'package:painless_oauth_interface/painless_oauth_error.dart';
+
+/// A representation of the error response defined in https://tools.ietf.org/html/rfc6749#section-5.2
+class ErrorResponse extends PainlessOAuthError{
   final Map<String, String> allResponseParameters;
 
   //todo add check if contains required parameters

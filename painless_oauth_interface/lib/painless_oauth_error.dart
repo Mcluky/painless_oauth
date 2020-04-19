@@ -1,4 +1,4 @@
-abstract class PainlessOAuthError {
+abstract class PainlessOAuthError extends Error{
   /// Error in short in snake case (E.g "invalid_request").
   String get error;
 
@@ -7,6 +7,4 @@ abstract class PainlessOAuthError {
 
   ///@Nullable. A URI identifying a human-readable web page with information about the error.
   Uri get errorUri;
-
-  PainlessOAuthError._();
 }
