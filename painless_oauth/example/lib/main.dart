@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:painless_oauth/clients/spotify_oauth_client.dart';
 import 'package:painless_oauth/oauth/implicit_authenticator.dart';
@@ -29,6 +31,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   SpotifyImplicitFlowOAuthClient _spotifyImplicitFlowOAuthClient;
   ImplicitAuthenticator _implicitAuthenticator;
+  String _response;
 
   @override
   void initState() {
@@ -50,12 +53,15 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                Container(
+                    width: 500,
+                    child: Text(_response ?? '')),
                 RaisedButton(
                   child: Text('Sample Spotify Login IFrame(not working)'),
                   color: Colors.green,
                   onPressed: () {
-                    var futureResponse = _implicitAuthenticator.login(
-                        context, _spotifyImplicitFlowOAuthClient, {'web.useComponent': 'iframe'});
+                    var futureResponse = _implicitAuthenticator
+                        .login(context, _spotifyImplicitFlowOAuthClient, {'web.useComponent': 'iframe'});
                     printResult(futureResponse);
                   },
                 ),
@@ -63,8 +69,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Text('Sample Spotify Login PopUp'),
                   color: Colors.green,
                   onPressed: () {
-                    var futureResponse = _implicitAuthenticator.login(
-                        context, _spotifyImplicitFlowOAuthClient, {'web.useComponent': 'popUp'});
+                    var futureResponse = _implicitAuthenticator
+                        .login(context, _spotifyImplicitFlowOAuthClient, {'web.useComponent': 'popUp'});
                     printResult(futureResponse);
                   },
                 ),
@@ -72,8 +78,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Text('Sample Spotify Login new Tab'),
                   color: Colors.green,
                   onPressed: () {
-                    var futureResponse = _implicitAuthenticator.login(
-                        context, _spotifyImplicitFlowOAuthClient, {'web.useComponent': 'tab'});
+                    var futureResponse = _implicitAuthenticator
+                        .login(context, _spotifyImplicitFlowOAuthClient, {'web.useComponent': 'tab'});
                     printResult(futureResponse);
                   },
                 ),
@@ -87,10 +93,23 @@ class _MyHomePageState extends State<MyHomePage> {
     futureResponse.then((response) {
       print('------------- SUCCESS -------------');
       print('access token: ${response.accessToken}');
+      setState(() {
+        _response = mapToPrettyFormattedString(response.allResponseParameters);
+      });
     }).catchError((error) {
       print('------------- SUCCESSN\'T -------------');
       print('error: ${error.error}');
       print('error description: ${error.errorDescription}');
+      setState(() {
+        Map errorResponseMap = {'error': error.error, 'errorDescription': error.errorDescription};
+        _response = mapToPrettyFormattedString(errorResponseMap);
+      });
     });
+  }
+
+  String mapToPrettyFormattedString(Map response){
+    JsonEncoder encoder = JsonEncoder.withIndent('   ');
+    String prettyFormattedString = encoder.convert(response);
+    return prettyFormattedString;
   }
 }
