@@ -4,7 +4,7 @@ import 'package:painless_oauth_interface/authorization_client.dart';
 
 class WindowTabManager {
   ///@Nullable if no window is currently active.
-  Window _activeAuthorizationWindow;
+  WindowBase _activeAuthorizationWindow;
 
   /// Opens the authorization page in a new tab.
   void openInNewTab(AuthorizationClient authorizationClient) {
