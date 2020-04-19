@@ -21,6 +21,7 @@ class CallbackCapturerService {
 
   /// Listen for the callback
   Future<Map<String, String>> listenForResult() {
+    //todo throw exception when Iframe was not able to load
     Completer<Map<String, String>> completer = Completer();
     //listen for response from service worker
     BroadcastChannel oauthCallbackChannel = BroadcastChannel('oauth_callback');
