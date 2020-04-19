@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:painless_oauth/clients/spotify_oauth_client.dart';
 import 'package:painless_oauth/oauth/implicit_authenticator.dart';
+import 'package:painless_oauth/oauth/responses/implicit_flow_response.dart';
 
 import 'oauth_properties.dart';
 
@@ -45,21 +46,51 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: Material(
           child: Center(
-            child: RaisedButton(
-              child: Text('Login'),
-              color: Colors.green,
-              onPressed: () {
-                _implicitAuthenticator.login(context, _spotifyImplicitFlowOAuthClient).then((response) {
-                  print('------------- SUCCESS -------------');
-                  print('access token: ${response.accessToken}');
-                }).catchError((error) {
-                  print('------------- SUCCESSN\'T -------------');
-                  print('error: ${error.error}');
-                  print('error description: ${error.errorDescription}');
-                });
-              },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                RaisedButton(
+                  child: Text('Sample Spotify Login IFrame(not working)'),
+                  color: Colors.green,
+                  onPressed: () {
+                    var futureResponse = _implicitAuthenticator.login(
+                        context, _spotifyImplicitFlowOAuthClient, {'web.useComponent': 'iframe'});
+                    printResult(futureResponse);
+                  },
+                ),
+                RaisedButton(
+                  child: Text('Sample Spotify Login PopUp'),
+                  color: Colors.green,
+                  onPressed: () {
+                    var futureResponse = _implicitAuthenticator.login(
+                        context, _spotifyImplicitFlowOAuthClient, {'web.useComponent': 'popUp'});
+                    printResult(futureResponse);
+                  },
+                ),
+                RaisedButton(
+                  child: Text('Sample Spotify Login new Tab'),
+                  color: Colors.green,
+                  onPressed: () {
+                    var futureResponse = _implicitAuthenticator.login(
+                        context, _spotifyImplicitFlowOAuthClient, {'web.useComponent': 'tab'});
+                    printResult(futureResponse);
+                  },
+                ),
+              ],
             ),
           ),
         ));
+  }
+
+  void printResult(Future<ImplicitFlowResponse> futureResponse) {
+    futureResponse.then((response) {
+      print('------------- SUCCESS -------------');
+      print('access token: ${response.accessToken}');
+    }).catchError((error) {
+      print('------------- SUCCESSN\'T -------------');
+      print('error: ${error.error}');
+      print('error description: ${error.errorDescription}');
+    });
   }
 }
