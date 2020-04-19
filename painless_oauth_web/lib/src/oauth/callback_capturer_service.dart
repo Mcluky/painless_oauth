@@ -23,10 +23,11 @@ class CallbackCapturerService {
   Future<Map<String, String>> listenForResult() {
     Completer<Map<String, String>> completer = Completer();
     //listen for response from service worker
-    BroadcastChannel oauthCallbackChannel = new BroadcastChannel('oauth_callback');
-    oauthCallbackChannel.onMessage.listen((event) {
+    BroadcastChannel oauthCallbackChannel = BroadcastChannel('oauth_callback');
+    oauthCallbackChannel.onMessage.first.then((event) {
       String callbackUrl = event.data;
       Map<String, String> parameters = parseCallbackUrlToParameters(callbackUrl);
+      oauthCallbackChannel.close();
       completer.complete(parameters);
     });
     return completer.future;
