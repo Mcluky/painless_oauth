@@ -36,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     _spotifyImplicitFlowOAuthClient =
-        SpotifyImplicitFlowOAuthClient(redirectUri: OAuthProperties.redirectUri, clientId: OAuthProperties.clientId);
+        SpotifyImplicitFlowOAuthClient(redirectUri: OAuthProperties.redirectUri, clientId: OAuthProperties.clientId, scopes: ['user-read-email']);
     _implicitAuthenticator = ImplicitAuthenticator();
     super.initState();
   }
@@ -56,6 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Container(
                     width: 500,
                     child: Text(_response ?? '')),
+                // LOGIN
                 RaisedButton(
                   child: Text('Sample Spotify Login IFrame(not working)'),
                   color: Colors.green,
@@ -80,6 +81,34 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () {
                     var futureResponse = _implicitAuthenticator
                         .login(context, _spotifyImplicitFlowOAuthClient, {'web.useComponent': 'tab'});
+                    printResult(futureResponse);
+                  },
+                ),
+                // IMPLICIT SILENT REFRESH
+                RaisedButton(
+                  child: Text('Sample Spotify Silent Refresh IFrame(not working)'),
+                  color: Colors.green,
+                  onPressed: () {
+                    var futureResponse = _implicitAuthenticator
+                        .silentRefresh(context, _spotifyImplicitFlowOAuthClient, {'web.useComponent': 'iframe'});
+                    printResult(futureResponse);
+                  },
+                ),
+                RaisedButton(
+                  child: Text('Sample Spotify Silent Refresh PopUp'),
+                  color: Colors.green,
+                  onPressed: () {
+                    var futureResponse = _implicitAuthenticator
+                        .silentRefresh(context, _spotifyImplicitFlowOAuthClient, {'web.useComponent': 'popUp'});
+                    printResult(futureResponse);
+                  },
+                ),
+                RaisedButton(
+                  child: Text('Sample Spotify Silent Refresh new Tab'),
+                  color: Colors.green,
+                  onPressed: () {
+                    var futureResponse = _implicitAuthenticator
+                        .silentRefresh(context, _spotifyImplicitFlowOAuthClient, {'web.useComponent': 'tab'});
                     printResult(futureResponse);
                   },
                 ),
