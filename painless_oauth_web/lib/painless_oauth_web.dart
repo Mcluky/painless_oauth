@@ -1,11 +1,14 @@
 import 'dart:async';
-import 'dart:html';
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:painless_oauth_interface/authorization_client.dart';
 import 'package:painless_oauth_interface/painless_oauth_interface.dart';
 import 'package:painless_oauth_web/src/oauth/callback_capturer_service.dart';
-import 'package:painless_oauth_web/src/widget/authorization_page.dart';
+import 'package:painless_oauth_web/src/oauth/web_authorization_component.dart';
+import 'package:painless_oauth_web/src/widget/iframe_authorization_page.dart';
+import 'package:painless_oauth_web/src/widget/pop_up_authorization_page.dart';
+import 'package:painless_oauth_web/src/widget/tab_authorization_page.dart';
 
 class PainlessOAuthPlugin extends PainlessOAuthPlatform {
   static void registerWith(Registrar registrar) {
@@ -16,14 +19,21 @@ class PainlessOAuthPlugin extends PainlessOAuthPlatform {
   Widget authorizationPage(
       {@required AuthorizationClient authorizationClient, Map<String, Object> platformSpecificOptions = const {}}) {
     //todo add this key to documention
-    bool useIframe = platformSpecificOptions['useIfame'] ?? false;
-    Uri parametrizedAuthorizationUri = authorizationClient.parametrizedAuthorizationUri;
-    if(useIframe){
-      return AuthorizationPage(authorizationUri: parametrizedAuthorizationUri);
+    String webAuthorizationComponentName = platformSpecificOptions['web.useComponent'] ?? 'popUp';
+    WebAuthorizationComponent webAuthorizationComponent = WebAuthorizationComponent(webAuthorizationComponentName);
+    assert(webAuthorizationComponent == WebAuthorizationComponent.popUp ||
+            webAuthorizationComponent == WebAuthorizationComponent.tab ||
+            webAuthorizationComponent == WebAuthorizationComponent.iframe,
+        'The platformspecific option \'web.useComponent\' with value \'$webAuthorizationComponentName\' does not exist');
+
+    if (webAuthorizationComponent == WebAuthorizationComponent.tab) {
+      return TabAuthorizationPage(authorizationClient: authorizationClient);
+    } else if(webAuthorizationComponent == WebAuthorizationComponent.iframe){
+      return IframeAuthorizationPage(authorizationClient: authorizationClient);
+    } else {
+      // Default to popUp on prod build if other web component not available
+      return PopUpAuthorizationPage(authorizationClient: authorizationClient);
     }
-    //String windowsFeature = 'menubar=no,toolbar=no';
-    window.open(parametrizedAuthorizationUri.toString(), 'Painless_OAuth_Popup');
-    return Text('Waiting...');
   }
 
   @override

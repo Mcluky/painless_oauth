@@ -2,25 +2,26 @@ import 'dart:html';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:painless_oauth_interface/authorization_client.dart';
 
 import 'iframe_size_wrapper.dart';
 
-class AuthorizationPage extends StatefulWidget {
-  final Uri authorizationUri;
+class IframeAuthorizationPage extends StatefulWidget {
+  final AuthorizationClient authorizationClient;
 
-  AuthorizationPage({@required this.authorizationUri});
+  IframeAuthorizationPage({@required this.authorizationClient});
 
   @override
-  _AuthorizationPageState createState() => _AuthorizationPageState();
+  _IframeAuthorizationPageState createState() => _IframeAuthorizationPageState();
 }
 
-class _AuthorizationPageState extends State<AuthorizationPage> {
+class _IframeAuthorizationPageState extends State<IframeAuthorizationPage> {
   IFrameElement _iframeElement;
 
   @override
   void initState() {
     _iframeElement = IFrameElement();
-    _iframeElement.src = widget.authorizationUri.toString();
+    _iframeElement.src = widget.authorizationClient.authorizationUri.toString();
     _iframeElement.style.border = 'none';
 
     // ignore: undefined_prefixed_name

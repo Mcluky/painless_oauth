@@ -5,10 +5,7 @@ self.addEventListener('fetch', function (event) {
   event.respondWith(
     handleCallback(event.request)
     .then((parameters) => {
-      //todo close tab when successful
-      return new Response('<p>Logging in...</p>', {
-        headers: { 'Content-Type': 'text/html' }
-      })
+      return this.getWebPageResponse();
     }).catch((error) => {
       console.error('Failed to log in.')
       console.error(error);  
@@ -68,3 +65,41 @@ function getErrorAsUriFragment(errorObject){
   var errorUriFragment = '#' + errorParameters.toString();
   return errorUriFragment;
 }
+
+/**
+ * Returns the web page displayed / executed after the main app was notified. 
+ * Mainly closes the current tab if the application is not running in an Iframe.
+ * @returns {Response} web page response
+ */
+function getWebPageResponse(){
+  return new Response(`
+  <!DOCTYPE html>
+  <body>
+    <p>Authentication finished, you can now close this window...</p>
+    <script>
+      //from https://stackoverflow.com/questions/326069/how-to-identify-if-a-webpage-is-being-loaded-inside-an-iframe-or-directly-into-t (on 2020-04-19)
+      function isRunningInIframe() {
+        try {
+            return window.self !== window.top;
+        } catch (e) {
+            return true;
+        }
+      }
+      
+      // From https://developer.mozilla.org/de/docs/Web/API/Window/close (on 2020-04-19)
+      function closeCurrentWindow() {
+        window.close();
+      }
+      
+      var isRunningInPopup = !isRunningInIframe();
+      if(isRunningInPopup){
+        closeCurrentWindow();
+      }
+    </script>
+  </body>`, {
+    headers: { 'Content-Type': 'text/html' }
+  })
+}
+
+
+
