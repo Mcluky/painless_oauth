@@ -11,9 +11,13 @@ import 'package:painless_oauth_interface/errors/unknown_error.dart';
 import 'package:painless_oauth_interface/painless_oauth_interface.dart';
 
 class ImplicitAuthenticator {
+  final AuthorizationClient authorizationClient;
+
+  ImplicitAuthenticator(this.authorizationClient)
+      : assert(authorizationClient != null, "The AuthorizationClient must not be null.");
+
   ///Opens the authorization login screen on which the user should log in.
-  Future<ImplicitFlowResponse> login(BuildContext context, AuthorizationClient authorizationClient,
-      [Map<String, Object> platformSpecificOptions]) {
+  Future<ImplicitFlowResponse> login(BuildContext context, [Map<String, Object> platformSpecificOptions]) {
     platformSpecificOptions ??= const {}; // default to empty map
 
     var futureOAuthResponse = PainlessOAuthPlatform.instance.listenForResult(authorizationClient);
@@ -25,8 +29,8 @@ class ImplicitAuthenticator {
     return _handleImplicitFlowResponse(futureOAuthResponse);
   }
 
-  Future<ImplicitFlowResponse> silentRefresh(BuildContext context, AuthorizationClient authorizationClient,
-      [Map<String, Object> platformSpecificOptions]) {
+  /// Silently refreshes a implicit token
+  Future<ImplicitFlowResponse> silentRefresh(BuildContext context, [Map<String, Object> platformSpecificOptions]) {
     platformSpecificOptions ??= const {}; // default to empty map
 
     var futureOAuthResponse = PainlessOAuthPlatform.instance.listenForResult(authorizationClient);
