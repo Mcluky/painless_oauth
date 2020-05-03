@@ -8,8 +8,6 @@ class IFrameSizeWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool shouldTakeFullScreen = MediaQuery.of(context).size.height < 650 || MediaQuery.of(context).size.width < 750;
-    print('height: ' + MediaQuery.of(context).size.height.toString());
-    print('width: ' + MediaQuery.of(context).size.width.toString());
     return shouldTakeFullScreen ?
     IFrameSizeWrapperMobile(child: child):
     IFrameSizeWrapperDesktop(child: child);
