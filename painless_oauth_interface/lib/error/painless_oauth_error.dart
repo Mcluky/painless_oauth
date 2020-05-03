@@ -1,4 +1,4 @@
-abstract class PainlessOAuthError extends Error{
+abstract class PainlessOAuthError extends Error {
   /// Error in short in snake case (E.g "invalid_request").
   String get error;
 
