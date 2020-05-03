@@ -1,9 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:painless_oauth_web/painless_oauth_web.dart';
-
 void main() {
-  test('adds one to input values', () {
+  test('dummy test', () {
+    expect(true, false);
     /*final calculator = Calculator();
     expect(calculator.addOne(2), 3);
     expect(calculator.addOne(-7), -6);
