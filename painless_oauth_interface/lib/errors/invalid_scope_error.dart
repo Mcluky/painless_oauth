@@ -1,4 +1,4 @@
-import 'package:painless_oauth_interface/error/generic_oauth_flow_error.dart';
+import 'package:painless_oauth_interface/errors/generic_oauth_flow_error.dart';
 
 ///From https://tools.ietf.org/html/rfc6749#section-5.2
 class InvalidScopeError extends GenericOAuthFlowError {
