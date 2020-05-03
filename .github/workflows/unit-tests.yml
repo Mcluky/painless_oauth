@@ -28,9 +28,9 @@ jobs:
     
     - name: Get flutter dependencies
       run: flutter pub get
-      working-directory: /painless_oauth
+      working-directory: painless_oauth
     
     - name: Run unit tests
       run: flutter test
-      working-directory: /painless_oauth
+      working-directory: painless_oauth
       
