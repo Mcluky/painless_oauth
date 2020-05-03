@@ -10,6 +10,6 @@ class UnsupportedGrantTypeError extends GenericOAuthFlowError {
   static const String _defaultErrorUriString = 'https://tools.ietf.org/html/rfc6749#section-5.2';
 
   /// Defaults [errorDescription] and [errorUri] to values provided by [rfc6749](https://tools.ietf.org/html/rfc6749#section-5.2)
-  UnsupportedGrantTypeError([String errorDescription, String errorUri])
-      : super(errorName, errorDescription ?? _defaultErrorDescription, errorUri ?? _defaultErrorUriString);
+  UnsupportedGrantTypeError([String errorDescription, Uri errorUri])
+      : super(errorName, errorDescription ?? _defaultErrorDescription, errorUri ?? Uri.parse(_defaultErrorUriString));
 }

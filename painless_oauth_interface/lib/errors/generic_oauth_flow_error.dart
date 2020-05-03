@@ -9,6 +9,5 @@ abstract class GenericOAuthFlowError extends PainlessOAuthError {
   /// @Nullable
   final Uri errorUri;
 
-  GenericOAuthFlowError(this.error, [this.errorDescription, String errorUriString])
-      : errorUri = errorUriString != null ? Uri.parse(errorUriString) : null;
+  GenericOAuthFlowError(this.error, [this.errorDescription, this.errorUri]);
 }
