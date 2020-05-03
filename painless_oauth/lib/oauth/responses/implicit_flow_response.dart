@@ -1,4 +1,4 @@
-/// A representation of the implicit flow response defined in https://tools.ietf.org/html/rfc6749#section-4.2.2
+/// A facade pattern to represent the implicit flow response defined in https://tools.ietf.org/html/rfc6749#section-4.2.2
 class ImplicitFlowResponse {
   final Map<String, String> allResponseParameters;
 

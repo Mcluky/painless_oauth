@@ -1,6 +1,6 @@
-import 'package:painless_oauth_interface/painless_oauth_error.dart';
+import 'package:painless_oauth_interface/errors/painless_oauth_error.dart';
 
-/// A representation of the error response defined in https://tools.ietf.org/html/rfc6749#section-5.2
+/// A facade pattern to represented the error response defined in https://tools.ietf.org/html/rfc6749#section-5.2
 class ErrorResponse extends PainlessOAuthError{
   final Map<String, String> allResponseParameters;
 

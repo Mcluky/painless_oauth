@@ -10,7 +10,14 @@ class ImplicitFlowHiddenRefreshPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PainlessOAuthPlatform.instance.authorizationPage(
-        authorizationClient: authorizationClient, platformSpecificOptions: platformSpecificOptions);
+    return IgnorePointer(
+      ignoringSemantics: false,
+      child: Opacity(
+        opacity: 0,
+        alwaysIncludeSemantics: true,
+        child: PainlessOAuthPlatform.instance.authorizationPage(
+            authorizationClient: authorizationClient, platformSpecificOptions: platformSpecificOptions),
+      ),
+    );
   }
 }

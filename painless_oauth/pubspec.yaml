@@ -22,5 +22,6 @@ dependencies:
     path: ../painless_oauth_web
 
 dev_dependencies:
+  mockito: ^4.1.1
   flutter_test:
     sdk: flutter
