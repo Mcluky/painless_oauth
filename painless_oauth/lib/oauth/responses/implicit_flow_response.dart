@@ -13,7 +13,7 @@ class ImplicitFlowResponse {
   String get state => allResponseParameters['state'];
 
   /// Defaults to 3600 seconds = 1 hour if not specified. (According to the examples in
-  /// https://tools.ietf.org/html/rfc6749#section-4.2.2)
+  /// [rfc6749](https://tools.ietf.org/html/rfc6749#section-4.2.2))
   Duration get expiresIn {
     String expiresInSecondsText = allResponseParameters['expires_in'];
     int expiresInSeconds = expiresInSecondsText != null ? int.parse(expiresInSecondsText) : 3600; //default to 1 hour
@@ -23,10 +23,11 @@ class ImplicitFlowResponse {
 
   /// Returns the scopes defined in the response. Defaults to empty list.
   List<String> get scopes {
-    String encodedScopesText = allResponseParameters['scope'];
-    if (encodedScopesText == null) return [];
-    String decodedScopesText = Uri.decodeFull(encodedScopesText);
-    List<String> scopes = decodedScopesText.split('');
+    String scopesText = allResponseParameters['scope'];
+    if (scopesText == null || scopesText.isEmpty) {
+      return [];
+    }
+    List<String> scopes = scopesText.split(' ');
     return scopes;
   }
 }
