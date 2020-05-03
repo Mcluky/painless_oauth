@@ -10,7 +10,7 @@ void main() {
     var redirectUri = Uri.parse('https://my-server.com/redirect');
 
     var basicImplicitFlowOAuthClient =
-    new BasicImplicitFlowOAuthClient(authorizationUri: authorizeUri, clientId: clientId, redirectUri: redirectUri);
+        new BasicImplicitFlowOAuthClient(authorizationUri: authorizeUri, clientId: clientId, redirectUri: redirectUri);
 
     var actualParametrizedAuthorizationUri = basicImplicitFlowOAuthClient.parametrizedAuthorizationUri;
     var expectParametrizedAuthorizationUri = Uri.parse(
@@ -24,7 +24,7 @@ void main() {
     var redirectUri = Uri.parse('painlessoauth://redirect');
 
     var basicImplicitFlowOAuthClient =
-    new BasicImplicitFlowOAuthClient(authorizationUri: authorizeUri, clientId: clientId, redirectUri: redirectUri);
+        new BasicImplicitFlowOAuthClient(authorizationUri: authorizeUri, clientId: clientId, redirectUri: redirectUri);
 
     var actualParametrizedAuthorizationUri = basicImplicitFlowOAuthClient.parametrizedAuthorizationUri;
     var expectParametrizedAuthorizationUri = Uri.parse(
@@ -39,18 +39,22 @@ void main() {
     var responseType = 'someweirdtoken';
     var state = 'some_random_state69';
     var scopes = ['scope one', 'scope two'];
-    var additionalRequestParameter = {
-      'additional-key': 'some value',
-      'another key': 'some otther value'
-    };
+    var additionalRequestParameter = {'additional-key': 'some value', 'another key': 'some other value'};
 
-    var basicImplicitFlowOAuthClient =
-    new BasicImplicitFlowOAuthClient(authorizationUri: authorizeUri, clientId: clientId, redirectUri: redirectUri);
+    var basicImplicitFlowOAuthClient = new BasicImplicitFlowOAuthClient(
+        authorizationUri: authorizeUri,
+        clientId: clientId,
+        redirectUri: redirectUri,
+        responseType: responseType,
+        state: state,
+        scopes: scopes,
+        additionalRequestParameters: additionalRequestParameter);
 
     var actualParametrizedAuthorizationUri = basicImplicitFlowOAuthClient.parametrizedAuthorizationUri;
-    print(basicImplicitFlowOAuthClient.parametrizedAuthorizationUri);
     var expectParametrizedAuthorizationUri = Uri.parse(
-        'https://my-oauth-server.com/authorize?client_id=d6d7b2e8714b427ca3557ae71292100b&response_type=token&redirect_uri=painlessoauth%3A%2F%2Fredirect');
+        'https://my-oauth-server.com/authorize?client_id=d6d7b2e8714b427ca3557ae71292100b&response_type=someweirdtoken'
+        '&redirect_uri=painlessoauth%3A%2F%2Fredirect&scope=scope+one+scope+two&state=some_random_state69'
+        '&additional-key=some+value&another+key=some+other+value');
     assertUri(actualParametrizedAuthorizationUri, expectParametrizedAuthorizationUri);
   });
 }
